@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
 import { useRoute, RouteProp } from '@react-navigation/native'
 import useFileStore from '../state/fileStore'
-import { IFile } from '../types'
+import { FileStatusType, IFile } from '../types'
 
 export default function FileDetailsScreen() {
   type RouteParams = {
@@ -19,14 +19,14 @@ export default function FileDetailsScreen() {
 
   const [fileName, setFileName] = useState('');
   const [fileType, setFileType] = useState('');
-  const [fileStatus, setFileStatus] = useState('')
+  const [fileStatus, setFileStatus] = useState<FileStatusType>()
   const [error, setError] = useState('')
 
   useEffect(() => {
     const foundFile = allFiles.find((f) => f.id === fileId)
     if (foundFile){
         setFile(foundFile)
-        setFileName(foundFile.name);
+        setFileName(foundFile.mandatoryInput);
         setFileType(foundFile.type);
         setFileStatus(foundFile.status)
     } else {
@@ -37,7 +37,7 @@ export default function FileDetailsScreen() {
 
   const handleUpdateFile = () => {
     if (file && fileName && fileType && fileStatus) {
-      updateFile(fileId, { ...file, name: fileName, type: fileType, status: fileStatus as 'Open' | 'Closed' })
+      updateFile(fileId, { ...file, mandatoryInput: fileName, type: fileType, status: fileStatus })
       alert('File updated successfully');
     }
   }
@@ -68,7 +68,7 @@ export default function FileDetailsScreen() {
       <TextInput
         placeholder="File Status"
         value={fileStatus}
-        onChangeText={setFileStatus}
+        onChangeText={(text) => setFileStatus(text as FileStatusType)}
         style={styles.input}
       />
       <Button title="Update File" onPress={handleUpdateFile} />
