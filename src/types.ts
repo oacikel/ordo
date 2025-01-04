@@ -4,7 +4,7 @@ export interface IFile {
     id: string
     mandatoryInput: string
     status: FileStatusType
-    type: string
+    type: FileType
     numericInput1?: number
     textInput1?: string
     textInput2?: string

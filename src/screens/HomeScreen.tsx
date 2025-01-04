@@ -98,7 +98,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         {/* Create New File Button */}
         <TouchableOpacity
           style={styles.createButton}
-          onPress={() => navigation.navigate('FileDetails', { isEditMode: true })}
+          onPress={() => navigation.navigate('FileDetails', { isEditMode: true, fileId: null })}
         >
           <Text style={styles.createButtonText}>Yeni Dosya Oluştur</Text>
         </TouchableOpacity>
