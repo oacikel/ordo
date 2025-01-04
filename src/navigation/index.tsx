@@ -4,7 +4,15 @@ import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from 'src/screens/HomeScreen'
 import FileDetailsScreen from 'src/screens/FileDetailsScreen'
 
-const Stack = createStackNavigator()
+type ParamList = {
+    Home: undefined;
+    FileDetails: {
+        fileId: string | null;
+        isEditMode: boolean;
+    },
+};
+
+const Stack = createStackNavigator<ParamList>()
 
 export default function AppNavigation() {
   return (
