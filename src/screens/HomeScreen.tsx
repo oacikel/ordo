@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Button } from 'react-native'
 import { NavigationProp } from '@react-navigation/native'
-import { FilterType, IFile } from '../types' // Ensure this is your IFile interface
+import { FilterType, IFile } from 'src/types'
 import useFileStore from 'src/state/fileStore'
+import FileItem from 'src/components/FileItem'
+import { FAB } from "react-native-paper"
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>
 }
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
-    const files = useFileStore((state) => state.files) // Get all files from Zustand
+    const files = useFileStore((state) => state.files)
+    const updateFile = useFileStore((state) => state.updateFile)
     const [searchText, setSearchText] = useState<string>('')
     const [filter, setFilter] = useState<FilterType>('All')
     const [filteredFiles, setFilteredFiles] = useState<IFile[]>([])
@@ -41,34 +44,43 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         setFilter(newFilter)
       }
     }
-  
+
+    const handleNavigateToDetails = (fileId: string) => {
+      navigation.navigate('FileDetails', { fileId })
+    }
+    
+    const handleNavigateToTab = (fileId: string, tab: 'TabB' | 'TabC') => {
+      navigation.navigate('FileDetails', { fileId, initialTab: tab })
+    }
+    
+    const handleToggleStatus = (fileId: string) => {
+      switch (files.find((file) => file.id === fileId)?.status) {
+        case 'Open':
+          updateFile(fileId, { status: 'Closed' })
+          break
+        case 'Closed':
+          updateFile(fileId, { status: 'Open' })
+          break
+      }
+    }
+
     const renderFileItem = ({ item }: { item: IFile }) => (
-      <View style={styles.fileCard}>
-        <Text style={styles.fileName}>{item.mandatoryInput}</Text>
-        <Text style={styles.fileType}>Type: {item.type}</Text>
-        <Text style={styles.fileStatus}>
-          Status: {item.status === 'Open' ? 'Açık' : 'Kapalı'}
-        </Text>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => navigation.navigate('FileDetails', { fileId: item.id, isEditMode: false })}
-        >
-          <Text style={styles.actionButtonText}>Dosya detayına git</Text>
-        </TouchableOpacity>
-      </View>
+      <FileItem
+      file={item}
+      onNavigateToDetails={handleNavigateToDetails}
+      onNavigateToTab={handleNavigateToTab}
+      onToggleStatus={handleToggleStatus}
+    />
     )
   
     return (
       <View style={styles.container}>
-        {/* Search Input */}
         <TextInput
           style={styles.searchInput}
           placeholder="Dosya ara..."
           value={searchText}
           onChangeText={setSearchText}
         />
-  
-        {/* Filter Buttons */}
         <View style={styles.filterContainer}>
           <Button
             title="All"
@@ -86,8 +98,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
             color={filter === 'Closed' ? '#007AFF' : '#ccc'}
           />
         </View>
-  
-        {/* File List */}
+
         <FlatList
           data={filteredFiles}
           keyExtractor={(item) => item.id}
@@ -96,12 +107,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
         />
   
         {/* Create New File Button */}
-        <TouchableOpacity
-          style={styles.createButton}
-          onPress={() => navigation.navigate('FileDetails', { isEditMode: true, fileId: null })}
-        >
-          <Text style={styles.createButtonText}>Yeni Dosya Oluştur</Text>
-        </TouchableOpacity>
+        <FAB
+          style={styles.fab}
+          icon="plus"
+          label="Dosya Ekle"
+          onPress={() => navigation.navigate('FileDetails', { isEditMode: true, fileId: null })}>
+        </FAB>
       </View>
     )
   }
@@ -161,16 +172,10 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       textAlign: 'center',
       marginTop: 20,
     },
-    createButton: {
-      marginTop: 20,
-      backgroundColor: '#007AFF',
-      paddingVertical: 10,
-      borderRadius: 8,
-      alignItems: 'center',
-    },
-    createButtonText: {
-      color: '#fff',
-      fontWeight: 'bold',
-      fontSize: 16,
-    },
+    fab: {
+      position: "absolute",
+      right: 16,
+      bottom: 16,
+      backgroundColor: "#3b82f6",
+    }
   })
