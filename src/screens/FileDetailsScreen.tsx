@@ -153,7 +153,7 @@ const FileDetails: React.FC<FileDetailsProps> = ({ route, navigation }) => {
         </TouchableOpacity>
       )}
     </View>
-  )
+  );
 }
 
 export default FileDetails
