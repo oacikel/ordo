@@ -11,7 +11,6 @@ interface FileFieldsProps {
 const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
   return (
     <View>
-      {/* Mandatory Input */}
       <Text style={styles.label}>Mandatory Input</Text>
       <TextInput
         style={styles.input}
@@ -19,8 +18,6 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
         onChangeText={(text) => setFile({ ...file, mandatoryInput: text })}
         editable={editable}
       />
-
-      {/* Text Input 1 */}
       <Text style={styles.label}>Text Input 1</Text>
       <TextInput
         style={styles.input}
@@ -28,8 +25,6 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
         onChangeText={(text) => setFile({ ...file, textInput1: text })}
         editable={editable}
       />
-
-      {/* Numeric Input 1 */}
       <Text style={styles.label}>Numeric Input 1</Text>
       <TextInput
         style={styles.input}
@@ -40,8 +35,6 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
         editable={editable}
         keyboardType="numeric"
       />
-
-      {/* Additional Fields */}
       <Text style={styles.label}>Text Input 2</Text>
       <TextInput
         style={styles.input}
@@ -66,8 +59,6 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
         editable={editable}
         keyboardType="numeric"
       />
-
-      {/* Type Selection Buttons */}
       <FlatList
         data={['X', 'Y']}
         horizontal
