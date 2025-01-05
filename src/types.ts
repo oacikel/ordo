@@ -15,3 +15,4 @@ export interface IFile {
 
 export type FileStatusType = 'Open' | 'Closed'
 export type FileType = 'X' | 'Y'
+export type TabType = 'TabA' | 'TabB' | 'TabC'

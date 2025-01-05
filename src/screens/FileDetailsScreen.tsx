@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import { RouteProp, NavigationProp } from '@react-navigation/native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import useFileStore from 'src/state/fileStore'
-import { IFile } from 'src/types'
-import { FlatList } from 'react-native'
+import { IFile, TabType } from 'src/types'
+import FileFields from 'src/components/FileFields'
+import { RouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { ParamList } from 'src/navigation'
+import TabB from 'src/components/TabB'
+import TabC from 'src/components/TabC'
+import TabA from 'src/components/TabA'
 
+const Tab = createMaterialTopTabNavigator()
 
-type ParamList = {
-    FileDetails: {
-        fileId: string | null
-        isEditMode: boolean
-    }
-}
+type FileDetailsScreenRouteProp = RouteProp<ParamList, 'FileDetails'>;
+type FileDetailsScreenNavigationProp = StackNavigationProp<ParamList, 'FileDetails'>;
+
 interface FileDetailsProps {
-  route: RouteProp<ParamList, 'FileDetails'>
-  navigation: NavigationProp<ParamList, 'FileDetails'>
+  route: FileDetailsScreenRouteProp;
+  navigation: FileDetailsScreenNavigationProp;
 }
 
-const FileDetails: React.FC<FileDetailsProps> = ({ route, navigation }) => {
-  const { fileId, isEditMode } = route.params
+export default function  FileDetails({ route, navigation }: FileDetailsProps) {
+  const { fileId, isEditMode, initialTab } = route.params
   const files = useFileStore((state) => state.files)
   const addFile = useFileStore((state) => state.addFile)
   const [file, setFile] = useState<IFile | null>(null)
@@ -29,9 +33,8 @@ const FileDetails: React.FC<FileDetailsProps> = ({ route, navigation }) => {
       const existingFile = files.find((f) => f.id === fileId)
       setFile(existingFile || null)
     } else {
-      // Initialize a new file when creating
       setFile({
-        id: Date.now().toString(), // Temporary ID
+        id: Date.now().toString(),
         mandatoryInput: '',
         status: 'Open',
         type: 'X',
@@ -47,8 +50,19 @@ const FileDetails: React.FC<FileDetailsProps> = ({ route, navigation }) => {
 
   const handleSave = () => {
     if (file) {
-      addFile(file) // Add or update file in Zustand
+      addFile(file)
       navigation.goBack()
+    }
+  }
+
+  const getInitialRouteName = (): string => {
+    switch (initialTab) {
+      case 'TabB':
+        return 'Tab B'
+      case 'TabC':
+        return 'Tab C'
+      default:
+        return 'Bilgiler'
     }
   }
 
@@ -57,145 +71,42 @@ const FileDetails: React.FC<FileDetailsProps> = ({ route, navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Dosya Bilgileri</Text>
-        <TouchableOpacity onPress={() => setEditable(!editable)}>
-          <Text style={styles.editToggle}>{editable ? 'Kapat' : 'Düzenle'}</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Mandatory Input */}
-      <Text style={styles.label}>Mandatory Input</Text>
-      <TextInput
-        style={styles.input}
-        value={file.mandatoryInput}
-        onChangeText={(text) => setFile({ ...file, mandatoryInput: text })}
-        editable={editable}
-      />
-
-      {/* Text Input 1 */}
-      <Text style={styles.label}>Text Input 1</Text>
-      <TextInput
-        style={styles.input}
-        value={file.textInput1 || ''}
-        onChangeText={(text) => setFile({ ...file, textInput1: text })}
-        editable={editable}
-      />
-
-      {/* Numeric Input 1 */}
-      <Text style={styles.label}>Numeric Input 1</Text>
-      <TextInput
-        style={styles.input}
-        value={file.numericInput1?.toString() || ''}
-        onChangeText={(text) =>
-          setFile({ ...file, numericInput1: parseFloat(text) || undefined })
-        }
-        editable={editable}
-        keyboardType="numeric"
-      />
-      
-      {/* Text Input 2 */}
-        <Text style={styles.label}>Text Input 2</Text>
-        <TextInput
-          style={styles.input}
-          value={file.textInput2 || ''}
-          onChangeText={(text) => setFile({ ...file, textInput2: text })}
-          editable={editable}
-        />
-
-        {/* Text Input 3 */}
-        <Text style={styles.label}>Text Input 3</Text>
-        <TextInput
-          style={styles.input}
-          value={file.textInput3 || ''}
-          onChangeText={(text) => setFile({ ...file, textInput3: text })}
-          editable={editable}
-        />
-        
-        {/* Numeric Input 2 */}
-        <Text style={styles.label}>Numeric Input 2</Text>
-        <TextInput
-          style={styles.input}
-          value={file.numericInput2?.toString() || ''}
-          onChangeText={(text) =>
-            setFile({ ...file, numericInput2: parseFloat(text) || undefined })
-          }
-          editable={editable}
-          keyboardType="numeric"
-        />
-
-        {/* Type Selection Buttons */}
-        <FlatList
-          data={['X', 'Y']}
-          horizontal
-          keyExtractor={(item) => item}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{
-                backgroundColor: file.type === item ? '#007AFF' : '#ccc',
-                padding: 10,
-                borderRadius: 8,
-                marginRight: 8,
-              }}
-              onPress={() => setFile({ ...file, type: item as 'X' | 'Y' })}
-              disabled={!editable}
-            >
-              <Text style={{ color: '#fff' }}>{item}</Text>
-            </TouchableOpacity>
+      <View style={styles.container}>
+        <Tab.Navigator initialRouteName={getInitialRouteName()}>
+        <Tab.Screen 
+          name="Bilgiler" 
+          children={() => (
+          <TabA 
+            file={file} 
+            setFile={setFile} 
+            editable={editable} 
+            handleSave={handleSave} 
+          />
           )}
+          options={{ lazy: false }}
         />
-
-      {/* Save Button */}
-      {editable && (
-        <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-          <Text style={styles.saveButtonText}>Kaydet</Text>
-        </TouchableOpacity>
-      )}
-    </View>
-  );
+        <Tab.Screen name="Tab B" component={TabB}/>
+        <Tab.Screen name="Tab C" component={TabC}/>
+        </Tab.Navigator>
+      </View>
+  )
 }
-
-export default FileDetails
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  tabContent: {
+    flex: 1,
     padding: 16,
     backgroundColor: '#f9f9f9',
-  },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 16,
-  },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  editToggle: {
-    fontSize: 14,
-    color: '#007AFF',
-  },
-  label: {
-    fontSize: 14,
-    marginBottom: 4,
-  },
-  input: {
-    height: 40,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    marginBottom: 16,
-    backgroundColor: '#fff',
   },
   saveButton: {
     backgroundColor: '#007AFF',
     paddingVertical: 10,
     borderRadius: 8,
     alignItems: 'center',
+    marginTop: 16,
   },
   saveButtonText: {
     color: '#fff',

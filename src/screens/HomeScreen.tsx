@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text, FlatList, TouchableOpacity, TextInput, StyleSheet, Button } from 'react-native'
 import { NavigationProp } from '@react-navigation/native'
-import { FilterType, IFile } from 'src/types'
+import { FilterType, IFile, TabType } from 'src/types'
 import useFileStore from 'src/state/fileStore'
 import FileItem from 'src/components/FileItem'
 import { FAB } from "react-native-paper"
@@ -49,7 +49,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       navigation.navigate('FileDetails', { fileId })
     }
     
-    const handleNavigateToTab = (fileId: string, tab: 'TabB' | 'TabC') => {
+    const handleNavigateToTab = (fileId: string, tab: TabType) => {
       navigation.navigate('FileDetails', { fileId, initialTab: tab })
     }
     

@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Text, Card, IconButton, Chip, Menu } from 'react-native-paper'
-import { IFile } from 'src/types'
+import { IFile, TabType } from 'src/types'
 
 interface FileItemProps {
-    file: IFile;
-    onNavigateToDetails: (fileId: string) => void;
-    onNavigateToTab: (fileId: string, tab: 'TabB' | 'TabC') => void;
-    onToggleStatus: (fileId: string) => void;
+    file: IFile
+    onNavigateToDetails: (fileId: string) => void
+    onNavigateToTab: (fileId: string, tab: TabType) => void
+    onToggleStatus: (fileId: string) => void
   }
 
 
@@ -49,29 +49,29 @@ const closeMenu = () => setMenuVisible(false)
           >
             <Menu.Item
               onPress={() => {
-                closeMenu();
-                onNavigateToDetails(file.id);
+                closeMenu()
+                onNavigateToDetails(file.id)
               }}
               title="Dosya Detayına git"
             />
             <Menu.Item
               onPress={() => {
-                closeMenu();
-                onToggleStatus(file.id);
+                closeMenu()
+                onToggleStatus(file.id)
               }}
               title={file.status === 'Open' ? 'Dosyayı Kapat' : 'Dosyayı Aç'}
             />
             <Menu.Item
               onPress={() => {
-                closeMenu();
-                onNavigateToTab(file.id, 'TabB');
+                closeMenu()
+                onNavigateToTab(file.id, 'TabB')
               }}
               title="Tab B'ye git"
             />
             <Menu.Item
               onPress={() => {
-                closeMenu();
-                onNavigateToTab(file.id, 'TabC');
+                closeMenu()
+                onNavigateToTab(file.id, 'TabC')
               }}
               title="Tab C'ye git"
             />
