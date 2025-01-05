@@ -3,12 +3,14 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import HomeScreen from 'src/screens/HomeScreen'
 import FileDetailsScreen from 'src/screens/FileDetailsScreen'
+import { TabType } from 'src/types'
 
-type ParamList = {
+export type ParamList = {
     Home: undefined;
     FileDetails: {
-        fileId: string | null;
-        isEditMode: boolean;
+        fileId: string | null
+        isEditMode: boolean
+        initialTab: TabType
     },
 };
 
