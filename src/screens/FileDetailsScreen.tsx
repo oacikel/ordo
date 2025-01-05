@@ -10,6 +10,7 @@ import { ParamList } from 'src/navigation'
 import TabB from 'src/components/TabB'
 import TabC from 'src/components/TabC'
 import TabA from 'src/components/TabA'
+import { mapIFileFieldsToMessage, validateFile } from 'src/utils/UIUtils'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -26,8 +27,8 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   const files = useFileStore((state) => state.files)
   const addFile = useFileStore((state) => state.addFile)
   const [file, setFile] = useState<IFile | null>(null)
-  const [editable, setEditable] = useState<boolean>(isEditMode)
-
+  const [editable, setEditable] = useState<boolean>(isEditMode) // In the original request there is no need to change edit mode, but it can be added later
+ 
   useEffect(() => {
     if (fileId) {
       const existingFile = files.find((f) => f.id === fileId)
@@ -49,11 +50,24 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   }, [fileId])
 
   const handleSave = () => {
-    if (file) {
-      addFile(file)
+    if (!file) {
       navigation.goBack()
+      return
+    }
+
+    const missingFieldNames = validateFile(file)
+    const missingFields = missingFieldNames.map(mapIFileFieldsToMessage)
+    if (missingFields.length === 0) {
+      // Update the file's date to the current date
+      file.dateInput = new Date()
+      addFile(file)
+      alert('File saved successfully!')
+      navigation.goBack()
+    } else {
+      alert(`Please fill in the following fields: ${missingFields.join(', ')}`)
     }
   }
+
 
   const getInitialRouteName = (): string => {
     switch (initialTab) {
