@@ -8,6 +8,7 @@ import { FAB, Searchbar } from "react-native-paper"
 import globalStyles from 'src/styles'
 import useFirebaseAnalytics, { EVENT_NAMES } from 'src/utils/FirebaseUtils'
 import { useTranslation } from 'react-i18next'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>
@@ -91,6 +92,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       navigation.navigate('FileDetails', { isEditMode: true, fileId: null })
     }
     return (
+    <SafeAreaView style={[globalStyles.container, {padding: 0}]}>
       <View style={globalStyles.container}>
         <Searchbar
           style={globalStyles.searchInput}
@@ -124,6 +126,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           onPress={handleCreateFilePressed}>
         </FAB>
       </View>
+    </SafeAreaView>
     )
   }
 
