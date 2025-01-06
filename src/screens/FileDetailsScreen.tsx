@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect } from 'react'
 import { View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import useFileStore from 'src/state/fileStore'
-import { IFile } from 'src/types'
+import { FileStatusType, IFile } from 'src/types'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { ParamList } from 'src/navigation'
@@ -11,6 +11,7 @@ import TabC from 'src/components/TabC'
 import TabA from 'src/components/TabA'
 import { mapIFileFieldsToMessage, validateFile } from 'src/utils/UIUtils'
 import globalStyles from 'src/styles'
+import CustomAppBar from 'src/components/ CustomAppBar'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -28,11 +29,34 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   const addFile = useFileStore((state) => state.addFile)
   const [file, setFile] = useState<IFile | null>(null)
   const [editable, setEditable] = useState<boolean>(isEditMode) // In the original request there is no need to change edit mode, but it can be added later
- 
+  const [fileStatus, setFileStatus] = useState<FileStatusType>('Open')
+  const updateFile = useFileStore((state) => state.updateFile)
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => <CustomAppBar fileStatus={fileStatus} onToggleStatus={function (): void {
+        switch (files.find((file) => file.id === fileId)?.status) {
+          case 'Open':
+            if (file) {
+              updateFile(file.id, { status: 'Closed' })
+              setFileStatus('Closed')
+            }
+            break
+          case 'Closed':
+            if (file) {
+              updateFile(file.id, { status: 'Open' })
+              setFileStatus('Open')
+            }
+            break
+        }
+      } } />,
+    });
+  }, [navigation, fileStatus, fileId, file]);
+  
   useEffect(() => {
     if (fileId) {
       const existingFile = files.find((f) => f.id === fileId)
       setFile(existingFile || null)
+      setFileStatus(existingFile?.status || 'Open')
     } else {
       setFile({
         id: Date.now().toString(),
