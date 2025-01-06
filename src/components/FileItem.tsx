@@ -4,6 +4,7 @@ import { Text, Card, IconButton, Chip, Menu } from 'react-native-paper'
 import globalStyles from 'src/styles'
 import { IFile, TabType } from 'src/types'
 import Separator from './Separator'
+import { useTranslation } from 'react-i18next'
 
 interface FileItemProps {
     file: IFile
@@ -19,7 +20,7 @@ const FileItem: React.FC<FileItemProps> = ({
     onNavigateToTab,
     onToggleStatus,
   }) => {
-
+const { t } = useTranslation()
 const [menuVisible, setMenuVisible] = useState(false)
 
 const openMenu = () => setMenuVisible(true)
@@ -42,7 +43,7 @@ const closeMenu = () => setMenuVisible(false)
               file.status === 'Open' ? globalStyles.openStatusText : globalStyles.closedStatusText
             }
           >
-            {file.status === 'Open' ? 'Açık' : 'Kapalı'}
+            {file.status === 'Open' ? t('fileStatusOpen') : t('fileStatusClosed')}
           </Chip>
           <Separator />
             <Menu
@@ -62,28 +63,28 @@ const closeMenu = () => setMenuVisible(false)
               closeMenu()
               onNavigateToDetails(file.id)
               }}
-              title="Dosya Detayına git"
+              title= {t('navigateToDetails')}
             />
             <Menu.Item
               onPress={() => {
               closeMenu()
               onToggleStatus(file.id)
               }}
-              title={file.status === 'Open' ? 'Dosyayı Kapat' : 'Dosyayı Aç'}
+              title={file.status === 'Open' ? t('closeFile') : t('openFile')}
             />
             <Menu.Item
               onPress={() => {
               closeMenu()
               onNavigateToTab(file.id, 'TabB')
               }}
-              title="Tab B'ye git"
+              title={t('navigateToTabB')}
             />
             <Menu.Item
               onPress={() => {
               closeMenu()
               onNavigateToTab(file.id, 'TabC')
               }}
-              title="Tab C'ye git"
+              title={t('navigateToTabC')}
             />
             </Menu>
         </View>

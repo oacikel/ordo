@@ -1,0 +1,27 @@
+{
+    "searchPlaceholder": "Dosya Ara",
+    "filterAll": "Tümü",
+    "filterOpened": "Açık",
+    "filterClosed": "Kapalı",
+    "noFileExists": "Dosya bulunamadı",
+    "createFile": "Dosya Ekle",
+    "informationTab": "Bilgiler",
+    "tabBScreenName": "Tab B",
+    "tabCScreenName": "Tab C",
+    "navigateToDetails": "Dosya detayına git",
+    "navigateToTabB": "Tab B'ye git",
+    "navigateToTabC": "Tab C'ye git",
+    "closeFile": "Dosyayı kapat",
+    "openFile": "Dosyayı aç",
+    "fileStatusOpen": "Açık",
+    "fileStatusClosed": "Kapandı",
+    "fileDetailsAppBarTitle": "Dosya Bilgileri",
+    "labelMandatoryInput": "Zorunlu Alan",
+    "labelTextInput1": "1. Metin Girişi",
+    "labelNumericInput1": "1. Sayısal Giriş",
+    "labelTextInput2": "2. Metin Girişi",
+    "labelTextInput3": "3. Metin Girişi",
+    "labelNumericInput2": "2. Sayısal Giriş",
+    "fileType": "Dosya Türü"
+
+  }
