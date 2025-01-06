@@ -6,6 +6,7 @@ import useFileStore from 'src/state/fileStore'
 import FileItem from 'src/components/FileItem'
 import { FAB, Searchbar } from "react-native-paper"
 import globalStyles from 'src/styles'
+import useFirebaseAnalytics, { EVENT_NAMES } from 'src/utils/FirebaseUtils'
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>
@@ -14,6 +15,7 @@ interface HomeScreenProps {
 export default function HomeScreen({ navigation }: HomeScreenProps) {
     const files = useFileStore((state) => state.files)
     const updateFile = useFileStore((state) => state.updateFile)
+    const firebaseAnalytics = useFirebaseAnalytics()
     const [searchText, setSearchText] = useState<string>('')
     const [filter, setFilter] = useState<FilterType>('All')
     const [filteredFiles, setFilteredFiles] = useState<IFile[]>([])
@@ -47,21 +49,29 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
     }
 
     const handleNavigateToDetails = (fileId: string) => {
+      firebaseAnalytics.logEvent(EVENT_NAMES.SCREEN_VIEW, { screen: 'FileDetails', fileId, tab: 'Details' })
       navigation.navigate('FileDetails', { fileId })
     }
     
     const handleNavigateToTab = (fileId: string, tab: TabType) => {
+      firebaseAnalytics.logEvent(EVENT_NAMES.SCREEN_VIEW, { screen: 'FileDetails', fileId, tab })
       navigation.navigate('FileDetails', { fileId, initialTab: tab })
     }
     
     const handleToggleStatus = (fileId: string) => {
       switch (files.find((file) => file.id === fileId)?.status) {
         case 'Open':
+        {
           updateFile(fileId, { status: 'Closed' })
+          firebaseAnalytics.logEvent(EVENT_NAMES.FILE_CLOSED, { fileId })
           break
+        }
         case 'Closed':
-          updateFile(fileId, { status: 'Open' })
-          break
+          {
+            updateFile(fileId, { status: 'Open' })
+            firebaseAnalytics.logEvent(EVENT_NAMES.FILE_OPENED, { fileId })
+            break
+          }
       }
     }
 
@@ -73,7 +83,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       onToggleStatus={handleToggleStatus}
     />
     )
-  
+    
+    const handleCreateFilePressed = () => {
+      firebaseAnalytics.logEvent(EVENT_NAMES.BUTTON_CLICK)
+      navigation.navigate('FileDetails', { isEditMode: true, fileId: null })
+    }
     return (
       <View style={globalStyles.container}>
         <Searchbar
@@ -105,7 +119,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           icon="plus"
           label="Dosya Ekle"
           color={globalStyles.fab.color}
-          onPress={() => navigation.navigate('FileDetails', { isEditMode: true, fileId: null })}>
+          onPress={handleCreateFilePressed}>
         </FAB>
       </View>
     )
