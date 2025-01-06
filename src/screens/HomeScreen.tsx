@@ -52,7 +52,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
 
     const handleNavigateToDetails = (fileId: string) => {
       firebaseAnalytics.logEvent(EVENT_NAMES.SCREEN_VIEW, { screen: 'FileDetails', fileId, tab: 'Details' })
-      navigation.navigate('FileDetails', { fileId })
+      navigation.navigate('FileDetails', { fileId, isEditMode: false })
     }
     
     const handleNavigateToTab = (fileId: string, tab: TabType) => {
