@@ -118,4 +118,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 - Thanks to the team for providing the design inspirations and use cases.
 - React Native and Expo documentation for excellent resources.
+- Thanks to my mom for always believing in me and believing that I can make the greatest React Native Apps.
 
