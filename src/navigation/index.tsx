@@ -6,13 +6,13 @@ import FileDetailsScreen from 'src/screens/FileDetailsScreen'
 import { TabType } from 'src/types'
 
 export type ParamList = {
-    Home: undefined;
+    Home: undefined
     FileDetails: {
         fileId: string | null
         isEditMode: boolean
         initialTab: TabType
     },
-};
+}
 
 const Stack = createStackNavigator<ParamList>()
 
@@ -21,7 +21,8 @@ export default function AppNavigation() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="FileDetails" component={FileDetailsScreen} />
+        <Stack.Screen name="FileDetails" component={FileDetailsScreen}
+         />
       </Stack.Navigator>
     </NavigationContainer>
   )
