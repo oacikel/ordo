@@ -13,6 +13,7 @@ import { mapIFileFieldsToMessage, validateFile } from 'src/utils/UIUtils'
 import globalStyles from 'src/styles'
 import CustomAppBar from 'src/components/ CustomAppBar'
 import useFirebaseAnalytics, { EVENT_NAMES } from 'src/utils/FirebaseUtils'
+import { useTranslation } from 'react-i18next'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -25,6 +26,7 @@ interface FileDetailsProps {
 }
 
 export default function  FileDetails({ route, navigation }: FileDetailsProps) {
+  const { t } = useTranslation()
   const { fileId, isEditMode, initialTab } = route.params
   const files = useFileStore((state) => state.files)
   const addFile = useFileStore((state) => state.addFile)
@@ -103,11 +105,11 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   const getInitialRouteName = (): string => {
     switch (initialTab) {
       case 'TabB':
-        return 'Tab B'
+        return t('tabBScreenName')
       case 'TabC':
-        return 'Tab C'
+        return t('tabC')
       default:
-        return 'Bilgiler'
+        return t('informationTab')
     }
   }
 
@@ -118,7 +120,7 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   return (
         <Tab.Navigator initialRouteName={getInitialRouteName()}>
         <Tab.Screen
-          name="Bilgiler" 
+          name={t('informationTab')}
           children={() => (
           <TabA 
             file={file} 
@@ -129,8 +131,8 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
           )}
           options={{ lazy: false }}
         />
-        <Tab.Screen name="Tab B" component={TabB}/>
-        <Tab.Screen name="Tab C" component={TabC}/>
+        <Tab.Screen name={t('tabBScreenName')} component={TabB}/>
+        <Tab.Screen name={t('tabCScreenName')} component={TabC}/>
         </Tab.Navigator>
   )
 }

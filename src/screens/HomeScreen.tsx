@@ -7,12 +7,14 @@ import FileItem from 'src/components/FileItem'
 import { FAB, Searchbar } from "react-native-paper"
 import globalStyles from 'src/styles'
 import useFirebaseAnalytics, { EVENT_NAMES } from 'src/utils/FirebaseUtils'
+import { useTranslation } from 'react-i18next'
 
 interface HomeScreenProps {
   navigation: NavigationProp<any>
 }
 
 export default function HomeScreen({ navigation }: HomeScreenProps) {
+    const { t } = useTranslation()
     const files = useFileStore((state) => state.files)
     const updateFile = useFileStore((state) => state.updateFile)
     const firebaseAnalytics = useFirebaseAnalytics()
@@ -92,19 +94,19 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       <View style={globalStyles.container}>
         <Searchbar
           style={globalStyles.searchInput}
-          placeholder="Dosya ara..."
+          placeholder={t('searchPlaceholder')}
           value={searchText}
           onChangeText={setSearchText}
         />
         <View style={globalStyles.filterContainer}>
           <TouchableOpacity onPress={() => handleFilterChange('All')} style={[globalStyles.filterButton, filter === 'All' && globalStyles.activeFilterButton]}>
-            <Text style={filter === 'All' ? globalStyles.activeFilterText : globalStyles.filterText}>All</Text>
+            <Text style={filter === 'All' ? globalStyles.activeFilterText : globalStyles.filterText}>{t('filterAll')}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleFilterChange('Open')} style={[globalStyles.filterButton, filter === 'Open' && globalStyles.activeFilterButton]}>
-            <Text style={filter === 'Open' ? globalStyles.activeFilterText : globalStyles.filterText}>Open</Text>
+            <Text style={filter === 'Open' ? globalStyles.activeFilterText : globalStyles.filterText}>{t('filterOpened')}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => handleFilterChange('Closed')} style={[globalStyles.filterButton, filter === 'Closed' && globalStyles.activeFilterButton]}>
-            <Text style={filter === 'Closed' ? globalStyles.activeFilterText : globalStyles.filterText}>Closed</Text>
+            <Text style={filter === 'Closed' ? globalStyles.activeFilterText : globalStyles.filterText}>{t('filterClosed')}</Text>
           </TouchableOpacity>
         </View>
 
@@ -112,12 +114,12 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           data={filteredFiles}
           keyExtractor={(item) => item.id}
           renderItem={renderFileItem}
-          ListEmptyComponent={<Text style={globalStyles.emptyText}>Dosya bulunamadı.</Text>}
+          ListEmptyComponent={<Text style={globalStyles.emptyText}>{t('noFileExists')}</Text>}
         />
         <FAB
           style={globalStyles.fab}
           icon="plus"
-          label="Dosya Ekle"
+          label={t('createFile')}
           color={globalStyles.fab.color}
           onPress={handleCreateFilePressed}>
         </FAB>

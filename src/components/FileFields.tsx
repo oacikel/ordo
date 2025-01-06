@@ -1,4 +1,5 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import globalStyles from 'src/styles'
@@ -11,19 +12,20 @@ interface FileFieldsProps {
 }
 
 const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
+  const { t } = useTranslation()
   return (
     <View>
       <TextInput
       style={globalStyles.input}
       mode='outlined'
-      label={'Mandatory Input'}
+      label={t('labelMandatoryInput')}
       value={file.mandatoryInput}
       onChangeText={(text) => setFile({ ...file, mandatoryInput: text })}
       editable={editable}
       />
       <TextInput
       style={globalStyles.input}
-      label={'Text Input 1'}
+      label={t('labelTextInput1')}
       mode='outlined'
       value={file.textInput1 || ''}
       onChangeText={(text) => setFile({ ...file, textInput1: text })}
@@ -32,7 +34,7 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
       <TextInput
       style={globalStyles.input}
       mode='outlined'
-      label={'Numeric Input 1'}
+      label={t('labelNumericInput1')}
       value={file.numericInput1?.toString() || ''}
       onChangeText={(text) =>
         setFile({ ...file, numericInput1: parseFloat(text) || undefined })
@@ -43,7 +45,7 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
       <TextInput
       style={globalStyles.input}
       mode='outlined'
-      label={'Text Input 2'}
+      label={t('labelTextInput2')}
       value={file.textInput2 || ''}
       onChangeText={(text) => setFile({ ...file, textInput2: text })}
       editable={editable}
@@ -51,7 +53,7 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
       <TextInput
       style={globalStyles.input}
       mode='outlined'
-      label={'Text Input 3'}
+      label={t('labelTextInput3')}
       value={file.textInput3 || ''}
       onChangeText={(text) => setFile({ ...file, textInput3: text })}
       editable={editable}
@@ -59,7 +61,7 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
       <TextInput
       style={globalStyles.input}
       mode='outlined'
-      label={'Numeric Input 2'}
+      label={t('labelNumericInput2')}
       value={file.numericInput2?.toString() || ''}
       onChangeText={(text) =>
         setFile({ ...file, numericInput2: parseFloat(text) || undefined })
@@ -67,7 +69,7 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
       editable={editable}
       keyboardType="numeric"
       />
-      <Text style={globalStyles.subTitle}>Dosya Türü</Text>
+      <Text style={globalStyles.subTitle}>{t('fileType')}</Text>
       <View style={globalStyles.filterContainer}>
       <TouchableOpacity
         style={file.type === 'X' ? globalStyles.fileTypeButtonActive : globalStyles.fileTypeButton}
