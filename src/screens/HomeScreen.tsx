@@ -4,7 +4,7 @@ import { NavigationProp } from '@react-navigation/native'
 import { FilterType, IFile, TabType } from 'src/types'
 import useFileStore from 'src/state/fileStore'
 import FileItem from 'src/components/FileItem'
-import { FAB } from "react-native-paper"
+import { FAB, Searchbar } from "react-native-paper"
 import globalStyles from 'src/styles'
 
 interface HomeScreenProps {
@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
   
     return (
       <View style={globalStyles.container}>
-        <TextInput
+        <Searchbar
           style={globalStyles.searchInput}
           placeholder="Dosya ara..."
           value={searchText}

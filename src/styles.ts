@@ -9,11 +9,10 @@ const globalStyles = StyleSheet.create({
         backgroundColor: COLORS.secondary,
     },
     searchInput: {
-        height: DIMENSIONS.inputHeight,
         borderColor: COLORS.border,
         borderWidth: 1,
         borderRadius: DIMENSIONS.borderRadius,
-        paddingHorizontal: 8,
+        backgroundColor: COLORS.white,
         marginBottom: DIMENSIONS.marginBottom,
     },
     filterButton: {
