@@ -37,7 +37,7 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   const updateFile = useFileStore((state) => state.updateFile)
   useLayoutEffect(() => {
     navigation.setOptions({
-      header: () => <CustomAppBar fileStatus={fileStatus} onToggleStatus={function (): void {
+      header: () => <CustomAppBar file={file} onToggleStatus={function (): void {
         switch (files.find((file) => file.id === fileId)?.status) {
           case 'Open':
             if (file) {

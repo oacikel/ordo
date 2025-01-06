@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons'
-import { Menu } from 'react-native-paper' // Install react-native-paper if not already installed
-import { FileStatusType } from 'src/types'
+import { Chip, Menu } from 'react-native-paper' // Install react-native-paper if not already installed
+import { FileStatusType, IFile } from 'src/types'
 import { useNavigation } from '@react-navigation/native'
 import { useTranslation } from 'react-i18next'
+import globalStyles from 'src/styles'
 
 
 interface CustomAppBarProps {
-    fileStatus: FileStatusType
+    file: IFile | null
     onToggleStatus: () => void
   }
 
-  const CustomAppBar: React.FC<CustomAppBarProps> = ({ fileStatus, onToggleStatus }) => {
+  const CustomAppBar: React.FC<CustomAppBarProps> = ({ file, onToggleStatus }) => {
+  const {mandatoryInput: fileName, status:fileStatus, 'dateInput':fileDate} = file || {mandatoryInput: '', status: 'Open', dateInput: null}
   const [menuVisible, setMenuVisible] = useState(false)
   const navigation = useNavigation()
   const openMenu = () => setMenuVisible(true)
@@ -24,12 +26,14 @@ interface CustomAppBarProps {
       <TouchableOpacity onPress={() => navigation.goBack()}>
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
+      <View style={styles.customAppBarMiddleSection}>
       <Text style={styles.title}>{t('fileDetailsAppBarTitle')}</Text>
-
+      <Text style={styles.text}>{`${fileName} - ${fileDate ?? ''}`}</Text>
+      </View>
       <View style={styles.rightSection}>
-        <TouchableOpacity style={styles.statusButton}>
-          <Text style={styles.statusText}>{fileStatus === 'Open' ? t('fileStatusOpen') : t('fileStatusClosed')}</Text>
-        </TouchableOpacity>
+        <Chip style={[globalStyles.statusChip, fileStatus === 'Open' ? globalStyles.openStatus : globalStyles.closedStatus]}>
+          <Text style={fileStatus === 'Open' ? globalStyles.openStatusText: globalStyles.closedStatusText}>{fileStatus === 'Open' ? t('fileStatusOpen') : t('fileStatusClosed')}</Text>
+        </Chip>
         <Menu
           visible={menuVisible}
           onDismiss={closeMenu}
@@ -57,16 +61,27 @@ const styles = StyleSheet.create({
     paddingTop: 40,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     paddingHorizontal: 10,
     paddingVertical: 5,
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '400',
-    textAlign: 'center',
-    flex: 1, // Center-align title by giving it flex space
+    textAlign: 'left',
+    flex: 1,
+  },
+  text: {
+    fontSize: 12,
+    fontWeight: '400',
+    textAlign: 'left',
+    flex: 1,
+  },
+  customAppBarMiddleSection: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    height: 'auto',
   },
   rightSection: {
     flexDirection: 'row',
