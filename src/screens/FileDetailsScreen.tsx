@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import useFileStore from 'src/state/fileStore'
-import { IFile, TabType } from 'src/types'
-import FileFields from 'src/components/FileFields'
+import { IFile } from 'src/types'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { ParamList } from 'src/navigation'
@@ -11,6 +10,7 @@ import TabB from 'src/components/TabB'
 import TabC from 'src/components/TabC'
 import TabA from 'src/components/TabA'
 import { mapIFileFieldsToMessage, validateFile } from 'src/utils/UIUtils'
+import globalStyles from 'src/styles'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -81,11 +81,11 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   }
 
   if (!file) {
-    return <Text style={styles.loadingText}>Dosya yükleniyor...</Text>
+    return <Text style={globalStyles.loadingText}>Dosya yükleniyor...</Text>
   }
 
   return (
-      <View style={styles.container}>
+      <View style={globalStyles.container}>
         <Tab.Navigator initialRouteName={getInitialRouteName()}>
         <Tab.Screen 
           name="Bilgiler" 
@@ -105,31 +105,3 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
       </View>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  tabContent: {
-    flex: 1,
-    padding: 16,
-    backgroundColor: '#f9f9f9',
-  },
-  saveButton: {
-    backgroundColor: '#007AFF',
-    paddingVertical: 10,
-    borderRadius: 8,
-    alignItems: 'center',
-    marginTop: 16,
-  },
-  saveButtonText: {
-    color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
-  },
-  loadingText: {
-    textAlign: 'center',
-    fontSize: 16,
-    marginTop: 20,
-  },
-})

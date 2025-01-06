@@ -1,18 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
+import globalStyles from 'src/styles';
 
 const TabB: React.FC = () => (
-    <View style={styles.tabContent}>
+    <View style={globalStyles.tabContent}>
         <Text>Tab B Content (Placeholder)</Text>
     </View>
-);
-
-const styles = StyleSheet.create({
-    tabContent: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
+)
 
 export default TabB;
