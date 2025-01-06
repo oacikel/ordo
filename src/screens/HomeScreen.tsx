@@ -83,21 +83,15 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           onChangeText={setSearchText}
         />
         <View style={globalStyles.filterContainer}>
-          <Button
-            title="All"
-            onPress={() => handleFilterChange('All')}
-            color={filter === 'All' ? '#007AFF' : '#ccc'}
-          />
-          <Button
-            title="Open"
-            onPress={() => handleFilterChange('Open')}
-            color={filter === 'Open' ? '#007AFF' : '#ccc'}
-          />
-          <Button
-            title="Closed"
-            onPress={() => handleFilterChange('Closed')}
-            color={filter === 'Closed' ? '#007AFF' : '#ccc'}
-          />
+          <TouchableOpacity onPress={() => handleFilterChange('All')} style={[globalStyles.filterButton, filter === 'All' && globalStyles.activeFilterButton]}>
+            <Text style={filter === 'All' ? globalStyles.activeFilterText : globalStyles.filterText}>All</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFilterChange('Open')} style={[globalStyles.filterButton, filter === 'Open' && globalStyles.activeFilterButton]}>
+            <Text style={filter === 'Open' ? globalStyles.activeFilterText : globalStyles.filterText}>Open</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFilterChange('Closed')} style={[globalStyles.filterButton, filter === 'Closed' && globalStyles.activeFilterButton]}>
+            <Text style={filter === 'Closed' ? globalStyles.activeFilterText : globalStyles.filterText}>Closed</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList

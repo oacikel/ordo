@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 import { COLORS, DIMENSIONS } from './constants'
+import { act } from 'react'
 
 const globalStyles = StyleSheet.create({
     container: {
@@ -14,6 +15,26 @@ const globalStyles = StyleSheet.create({
         borderRadius: DIMENSIONS.borderRadius,
         paddingHorizontal: 8,
         marginBottom: DIMENSIONS.marginBottom,
+    },
+    filterButton: {
+        padding: 8,
+        borderRadius: DIMENSIONS.borderRadius,
+        backgroundColor: COLORS.secondaryLight,
+        marginHorizontal: 4,
+        flex: 1,
+        
+    },
+    activeFilterButton: {
+        backgroundColor: COLORS.primaryLight,
+
+    },
+    filterText: {
+        color: COLORS.textLight,
+        textAlign: 'center',
+    },
+    activeFilterText: {
+        color: COLORS.text,
+        textAlign: 'center',
     },
     filterContainer: {
         flexDirection: 'row',
