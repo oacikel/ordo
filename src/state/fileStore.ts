@@ -19,7 +19,9 @@ const loadFilesFromLocalStorage = (): IFile[] => {
   return []
 }
 const saveFilesToLocalStorage = (files: IFile[]) => {
-  localStorage.setItem('files', JSON.stringify(files))
+  if (typeof window !== 'undefined' && window.localStorage) {
+    localStorage.setItem('files', JSON.stringify(files))
+  }
 }
 
 const useFileStore = create<FileStore>((set, get) => ({
