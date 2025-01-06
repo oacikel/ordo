@@ -9,7 +9,6 @@ Ordo is a file management application designed to simplify the process of creati
 - **Search and Filter**: Easily search and filter files by status or keywords.
 - **Firebase Analytics Integration**: Track user interactions and events for actionable insights.
 - **State Management with Zustand**: Efficiently manage application state.
-- **Theming with Styled Components**: Clean, maintainable, and customizable styles.
 
 ## Technologies Used
 
