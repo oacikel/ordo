@@ -12,10 +12,12 @@ type FileStore = {
 }
 
 const loadFilesFromLocalStorage = (): IFile[] => {
-  const files = localStorage.getItem('files')
-  return files ? JSON.parse(files) : []
+  if (typeof window !== 'undefined' && window.localStorage) {
+    const files = localStorage.getItem('files')
+    return files ? JSON.parse(files) : []
+  }
+  return []
 }
-
 const saveFilesToLocalStorage = (files: IFile[]) => {
   localStorage.setItem('files', JSON.stringify(files))
 }
