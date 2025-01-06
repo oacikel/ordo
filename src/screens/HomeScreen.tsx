@@ -106,12 +106,11 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
           renderItem={renderFileItem}
           ListEmptyComponent={<Text style={globalStyles.emptyText}>Dosya bulunamadı.</Text>}
         />
-  
-        {/* Create New File Button */}
         <FAB
           style={globalStyles.fab}
           icon="plus"
           label="Dosya Ekle"
+          color={globalStyles.fab.color}
           onPress={() => navigation.navigate('FileDetails', { isEditMode: true, fileId: null })}>
         </FAB>
       </View>

@@ -40,11 +40,11 @@ const globalStyles = StyleSheet.create({
         color: COLORS.primary,
     },
     actionButton: {
-        marginTop: 38,
         backgroundColor: COLORS.primary,
         paddingVertical: 8,
         borderRadius: DIMENSIONS.borderRadius,
         alignItems: 'center',
+        color: COLORS.white,
     },
     actionButtonText: {
         color: COLORS.white,
@@ -58,49 +58,78 @@ const globalStyles = StyleSheet.create({
     },
     fab: {
         position: "absolute",
-        right: 16,
-        bottom: 16,
+        right: DIMENSIONS.padding,
+        bottom: DIMENSIONS.padding,
         backgroundColor: COLORS.primary,
+        borderRadius: DIMENSIONS.borderRadius,
+        color: COLORS.white,
     },
-    card: {
+    cardOpen: {
         marginVertical: 8,
         borderRadius: 12,
         elevation: DIMENSIONS.elevation,
-        backgroundColor: '#f5faff',
+        backgroundColor: COLORS.primaryLight,
+        borderColor: COLORS.primary,
+        borderWidth: 2,
+    },
+    cardClosed: {
+        marginVertical: 8,
+        borderRadius: 12,
+        elevation: DIMENSIONS.elevation,
+        backgroundColor: COLORS.secondaryLight,
+        borderColor: COLORS.secondary,
     },
     headerRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-start',
     },
     mandatoryInput: {
         fontWeight: 'bold',
         color: '#333',
-        flex: 1,
+        width: 'auto'
     },
     statusChip: {
         marginHorizontal: 8,
-        borderRadius: 16,
+        borderRadius: 32,
         paddingHorizontal: 4,
+        borderWidth: 2,
     },
     openStatus: {
-        backgroundColor: '#e0f7fa',
-        borderColor: '#00796b',
+        backgroundColor: COLORS.primary,
+        borderColor: COLORS.primary,
+        color: COLORS.white,
     },
     closedStatus: {
-        backgroundColor: '#ffebee',
-        borderColor: '#d32f2f',
+        borderColor: COLORS.green,
+        backgroundColor: COLORS.transparent,
+    },
+    openStatusText: {
+        color: COLORS.white,
+    },
+    closedStatusText: {
+        color: COLORS.green,
     },
     detailsText: {
-        color: COLORS.text,
+        color: COLORS.textLight,
+        fontSize: 16,
         marginVertical: 2,
     },
-    divider: {
+    dividerOpen: {
         height: 1,
         borderStyle: 'dashed',
         borderWidth: 1,
-        borderColor: COLORS.border,
+        borderColor: COLORS.accent,
         marginVertical: 8,
+        marginHorizontal: -16,
+    },
+    dividerClosed: {
+        height: 1,
+        borderStyle: 'dashed',
+        borderWidth: 1,
+        borderColor: COLORS.secondary,
+        marginVertical: 8,
+        marginHorizontal: -16,
     },
     tabContent: {
         flex: 1,
