@@ -85,16 +85,15 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   }
 
   return (
-      <View style={globalStyles.container}>
         <Tab.Navigator initialRouteName={getInitialRouteName()}>
-        <Tab.Screen 
+        <Tab.Screen
           name="Bilgiler" 
           children={() => (
           <TabA 
             file={file} 
             setFile={setFile} 
             editable={editable} 
-            handleSave={handleSave} 
+            handleSave={handleSave}
           />
           )}
           options={{ lazy: false }}
@@ -102,6 +101,5 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
         <Tab.Screen name="Tab B" component={TabB}/>
         <Tab.Screen name="Tab C" component={TabC}/>
         </Tab.Navigator>
-      </View>
   )
 }

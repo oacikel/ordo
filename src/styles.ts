@@ -7,6 +7,7 @@ const globalStyles = StyleSheet.create({
         flex: 1,
         padding: DIMENSIONS.padding,
         backgroundColor: COLORS.background,
+        margin: 0
     },
     searchInput: {
         borderWidth: 1,
@@ -102,6 +103,11 @@ const globalStyles = StyleSheet.create({
         color: '#333',
         width: 'auto'
     },
+    subTitle: {
+        fontSize: 24,
+        color: COLORS.textLight,
+        marginVertical: 4,
+    },
     statusChip: {
         marginHorizontal: 8,
         borderRadius: 32,
@@ -145,9 +151,9 @@ const globalStyles = StyleSheet.create({
         marginHorizontal: -16,
     },
     tabContent: {
-        flex: 1,
         padding: DIMENSIONS.padding,
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.white,
+        margin: DIMENSIONS.padding,
     },
     saveButton: {
         backgroundColor: COLORS.primary,
@@ -171,13 +177,31 @@ const globalStyles = StyleSheet.create({
         marginBottom: 4,
     },
     input: {
-        height: DIMENSIONS.inputHeight,
-        borderWidth: 1,
-        borderRadius: DIMENSIONS.borderRadius,
+        borderRadius: DIMENSIONS.borderRadiusSmall,
         paddingHorizontal: 8,
         marginBottom: DIMENSIONS.marginBottom,
         backgroundColor: COLORS.white,
-    }
+    },
+    fileTypeButton: {
+        flex: 1,
+        width: 100,
+        paddingVertical: 10,
+        marginHorizontal: 5,
+        borderRadius: DIMENSIONS.borderRadius,
+        backgroundColor: COLORS.primary,
+        justifyContent: 'center',
+        alignItems: 'center',
+       },
+    fileTypeButtonActive: {
+        flex: 1,
+        width: 100,
+        paddingVertical: 10,
+        marginHorizontal: 5,
+        borderRadius: DIMENSIONS.borderRadius,
+        backgroundColor: COLORS.secondary,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })
 
 export default globalStyles

@@ -14,6 +14,7 @@ export const COLORS = {
 
 export const DIMENSIONS = {
   padding: 16,
+  borderRadiusSmall: 8,
   borderRadius: 100,
   elevation: 2,
   marginBottom: 12,

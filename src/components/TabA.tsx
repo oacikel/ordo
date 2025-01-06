@@ -2,6 +2,7 @@ import React from 'react'
 import { View, TouchableOpacity, Text } from 'react-native'
 import FileFields from './FileFields'
 import globalStyles from 'src/styles'
+import { Card } from 'react-native-paper'
 
 interface TabAProps {
     file: any
@@ -11,14 +12,14 @@ interface TabAProps {
 }
 
 const TabA: React.FC<TabAProps> = ({ file, setFile, editable, handleSave }) => (
-    <View style={globalStyles.tabContent}>
+    <Card style={globalStyles.tabContent}>
         <FileFields file={file} setFile={setFile} editable={editable} />
         {editable && (
             <TouchableOpacity style={globalStyles.saveButton} onPress={handleSave}>
                 <Text style={globalStyles.saveButtonText}>Kaydet</Text>
             </TouchableOpacity>
         )}
-    </View>
+    </Card>
 )
 
 export default TabA
