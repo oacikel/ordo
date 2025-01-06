@@ -4,7 +4,8 @@ import { NavigationProp } from '@react-navigation/native'
 import { FilterType, IFile, TabType } from 'src/types'
 import useFileStore from 'src/state/fileStore'
 import FileItem from 'src/components/FileItem'
-import { FAB } from "react-native-paper"
+import { FAB, Searchbar } from "react-native-paper"
+import globalStyles from 'src/styles'
 import useFirebaseAnalytics, { EVENT_NAMES } from 'src/utils/FirebaseUtils'
 
 interface HomeScreenProps {
@@ -88,106 +89,39 @@ export default function HomeScreen({ navigation }: HomeScreenProps) {
       navigation.navigate('FileDetails', { isEditMode: true, fileId: null })
     }
     return (
-      <View style={styles.container}>
-        <TextInput
-          style={styles.searchInput}
+      <View style={globalStyles.container}>
+        <Searchbar
+          style={globalStyles.searchInput}
           placeholder="Dosya ara..."
           value={searchText}
           onChangeText={setSearchText}
         />
-        <View style={styles.filterContainer}>
-          <Button
-            title="All"
-            onPress={() => handleFilterChange('All')}
-            color={filter === 'All' ? '#007AFF' : '#ccc'}
-          />
-          <Button
-            title="Open"
-            onPress={() => handleFilterChange('Open')}
-            color={filter === 'Open' ? '#007AFF' : '#ccc'}
-          />
-          <Button
-            title="Closed"
-            onPress={() => handleFilterChange('Closed')}
-            color={filter === 'Closed' ? '#007AFF' : '#ccc'}
-          />
+        <View style={globalStyles.filterContainer}>
+          <TouchableOpacity onPress={() => handleFilterChange('All')} style={[globalStyles.filterButton, filter === 'All' && globalStyles.activeFilterButton]}>
+            <Text style={filter === 'All' ? globalStyles.activeFilterText : globalStyles.filterText}>All</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFilterChange('Open')} style={[globalStyles.filterButton, filter === 'Open' && globalStyles.activeFilterButton]}>
+            <Text style={filter === 'Open' ? globalStyles.activeFilterText : globalStyles.filterText}>Open</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => handleFilterChange('Closed')} style={[globalStyles.filterButton, filter === 'Closed' && globalStyles.activeFilterButton]}>
+            <Text style={filter === 'Closed' ? globalStyles.activeFilterText : globalStyles.filterText}>Closed</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList
           data={filteredFiles}
           keyExtractor={(item) => item.id}
           renderItem={renderFileItem}
-          ListEmptyComponent={<Text style={styles.emptyText}>Dosya bulunamadı.</Text>}
+          ListEmptyComponent={<Text style={globalStyles.emptyText}>Dosya bulunamadı.</Text>}
         />
         <FAB
-          style={styles.fab}
+          style={globalStyles.fab}
           icon="plus"
           label="Dosya Ekle"
+          color={globalStyles.fab.color}
           onPress={handleCreateFilePressed}>
         </FAB>
       </View>
     )
   }
-  
-  const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      padding: 16,
-      backgroundColor: '#f9f9f9',
-    },
-    searchInput: {
-      height: 40,
-      borderColor: '#ccc',
-      borderWidth: 1,
-      borderRadius: 8,
-      paddingHorizontal: 8,
-      marginBottom: 16,
-    },
-    filterContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-around',
-      marginBottom: 16,
-    },
-    fileCard: {
-      backgroundColor: '#fff',
-      padding: 12,
-      borderRadius: 8,
-      marginBottom: 12,
-      elevation: 2,
-    },
-    fileName: {
-      fontSize: 16,
-      fontWeight: 'bold',
-    },
-    fileType: {
-      fontSize: 14,
-      color: '#555',
-    },
-    fileStatus: {
-      fontSize: 14,
-      color: '#007AFF',
-    },
-    actionButton: {
-      marginTop: 8,
-      backgroundColor: '#007AFF',
-      paddingVertical: 8,
-      borderRadius: 8,
-      alignItems: 'center',
-    },
-    actionButtonText: {
-      color: '#fff',
-      fontWeight: 'bold',
-    },
-    emptyText: {
-      fontSize: 16,
-      color: '#555',
-      textAlign: 'center',
-      marginTop: 20,
-    },
-    fab: {
-      position: "absolute",
-      right: 16,
-      bottom: 16,
-      backgroundColor: "#3b82f6",
-    }
-  })
+
