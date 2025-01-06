@@ -1,0 +1,36 @@
+{
+  "cli": {
+    "version": ">= 14.2.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleRelease -x lintVitalRelease",
+        "buildType": "apk"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "gradleCommand": ":app:assembleRelease -x lintVitalRelease",
+        "buildType": "apk"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "android": {
+        "gradleCommand": ":app:assembleRelease -x lintVitalRelease",
+        "buildType": "apk"
+      },
+      "env": {
+        "ANDROID_NDK_HOME": "/Users/ocul/Library/Android/sdk/ndk"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}

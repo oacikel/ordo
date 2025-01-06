@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import useFileStore from 'src/state/fileStore'
-import { IFile, TabType } from 'src/types'
-import FileFields from 'src/components/FileFields'
+import { IFile } from 'src/types'
 import { RouteProp } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { ParamList } from 'src/navigation'
@@ -11,6 +10,7 @@ import TabB from 'src/components/TabB'
 import TabC from 'src/components/TabC'
 import TabA from 'src/components/TabA'
 import { mapIFileFieldsToMessage, validateFile } from 'src/utils/UIUtils'
+import useFirebaseAnalytics, { EVENT_NAMES } from 'src/utils/FirebaseUtils'
 
 const Tab = createMaterialTopTabNavigator()
 
@@ -27,6 +27,7 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   const files = useFileStore((state) => state.files)
   const addFile = useFileStore((state) => state.addFile)
   const [file, setFile] = useState<IFile | null>(null)
+  const firebaseAnalytics = useFirebaseAnalytics()
   const [editable, setEditable] = useState<boolean>(isEditMode) // In the original request there is no need to change edit mode, but it can be added later
  
   useEffect(() => {
@@ -50,7 +51,9 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   }, [fileId])
 
   const handleSave = () => {
+    firebaseAnalytics.logEvent(EVENT_NAMES.FILE_CREATION_REQUESTED, { fileId: file?.id })
     if (!file) {
+      firebaseAnalytics.logEvent(EVENT_NAMES.FILE_CREATION_FAILURE)
       navigation.goBack()
       return
     }
@@ -59,9 +62,12 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
     const missingFields = missingFieldNames.map(mapIFileFieldsToMessage)
     if (missingFields.length === 0) {
       // Update the file's date to the current date
+
       file.dateInput = new Date()
       addFile(file)
       alert('File saved successfully!')
+      firebaseAnalytics.logEvent(EVENT_NAMES.FILE_CREATION_SUCCESS, { fileId: file.id })
+
       navigation.goBack()
     } else {
       alert(`Please fill in the following fields: ${missingFields.join(', ')}`)

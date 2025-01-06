@@ -1787,6 +1787,13 @@
   resolved "https://registry.yarnpkg.com/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
   integrity sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==
 
+"@react-native-firebase/analytics@^21.6.2":
+  version "21.6.2"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/analytics/-/analytics-21.6.2.tgz#79471f8292731325103e94026b476865c8e3d3e9"
+  integrity sha512-tOrYGf5F+ijJOr584EBGndE9lFe7VHY4eaSCAibMq3iuDyL6NVgAuZvaB9u2zE/wvcGyGCu9l8GWgimjrjTs8w==
+  dependencies:
+    superstruct "^2.0.2"
+
 "@react-native-firebase/app@^21.6.2":
   version "21.6.2"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-21.6.2.tgz#814574d02a14e767569469263d87fda9051ea799"
@@ -5964,6 +5971,11 @@ sudo-prompt@^8.2.0:
   version "8.2.5"
   resolved "https://registry.yarnpkg.com/sudo-prompt/-/sudo-prompt-8.2.5.tgz#cc5ef3769a134bb94b24a631cc09628d4d53603e"
   integrity sha512-rlBo3HU/1zAJUrkY6jNxDOC9eVYliG6nS4JA8u8KAshITd07tafMc/Br7xQwCSseXwJ2iCcHCE8SNWX3q8Z+kw==
+
+superstruct@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/superstruct/-/superstruct-2.0.2.tgz#3f6d32fbdc11c357deff127d591a39b996300c54"
+  integrity sha512-uV+TFRZdXsqXTL2pRvujROjdZQ4RAlBUS5BTh9IGm+jTqQntYThciG/qu57Gs69yjnVUSqdxF9YLmSnpupBW9A==
 
 supports-color@^5.3.0:
   version "5.5.0"
