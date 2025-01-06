@@ -1,5 +1,3 @@
-import { green } from "react-native-reanimated/lib/typescript/Colors"
-
 export const COLORS = {
   primary: '#2F54EB',
   primaryLight: '#EAEEFD',
@@ -8,7 +6,6 @@ export const COLORS = {
   secondaryLight: '#E8E8E8',
   text: '#09112F',
   textLight: '#707070',
-  border: '#ccc',
   background: '#fff',
   white: '#fff',
   transparent: 'transparent',

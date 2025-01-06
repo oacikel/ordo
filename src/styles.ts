@@ -6,10 +6,9 @@ const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         padding: DIMENSIONS.padding,
-        backgroundColor: COLORS.secondary,
+        backgroundColor: COLORS.background,
     },
     searchInput: {
-        borderColor: COLORS.border,
         borderWidth: 1,
         borderRadius: DIMENSIONS.borderRadius,
         backgroundColor: COLORS.white,
@@ -39,13 +38,6 @@ const globalStyles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         marginBottom: DIMENSIONS.marginBottom,
-    },
-    fileCard: {
-        backgroundColor: COLORS.background,
-        padding: 12,
-        borderRadius: DIMENSIONS.borderRadius,
-        marginBottom: DIMENSIONS.marginBottom,
-        elevation: DIMENSIONS.elevation,
     },
     fileName: {
         fontSize: 16,
@@ -90,14 +82,15 @@ const globalStyles = StyleSheet.create({
         elevation: DIMENSIONS.elevation,
         backgroundColor: COLORS.primaryLight,
         borderColor: COLORS.primary,
-        borderWidth: 2,
+        borderWidth: 1,
     },
     cardClosed: {
         marginVertical: 8,
         borderRadius: 12,
         elevation: DIMENSIONS.elevation,
         backgroundColor: COLORS.secondaryLight,
-        borderColor: COLORS.secondary,
+        borderColor: COLORS.textLight   ,
+        borderWidth: 1,
     },
     headerRow: {
         flexDirection: 'row',
@@ -179,7 +172,6 @@ const globalStyles = StyleSheet.create({
     },
     input: {
         height: DIMENSIONS.inputHeight,
-        borderColor: COLORS.border,
         borderWidth: 1,
         borderRadius: DIMENSIONS.borderRadius,
         paddingHorizontal: 8,
