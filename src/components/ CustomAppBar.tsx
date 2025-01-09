@@ -86,12 +86,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'left',
     height: 'auto',
+    width: '100%',
     flex: 1,
-    width: '50%',
   },
   customAppBarMiddleSection: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+    flex: 1,
   },
   rightSection: {
     flexDirection: 'row',
