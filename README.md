@@ -2,6 +2,14 @@
 
 Ordo is a file management application designed to simplify the process of creating, organizing, and editing files. Developed using React Native with Expo, Ordo leverages modern tools and state management solutions to deliver an intuitive and functional user experience. This project was created as part of a React Native developer case study.
 
+## Notes For The Reviewing Committee (Important!!!)
+
+On the day of the release date and the days following, I have encountered some bugs and missing parts. Not wanting to leave a project so apparently non-fixed, I've gone ahead and made the fixes.
+If this is not permitted, please consider [this branch](https://github.com/oacikel/ordo/tree/case-study-until-deadline).
+That being said I hope that my last inputs are also taken into consideration.
+For the latest video recording of the app please view [this we transfer link](https://we.tl/t-9oY5oLIhrb)
+
+
 ## Features
 
 - **File Management**: Create, edit, and delete files with multiple input types.
