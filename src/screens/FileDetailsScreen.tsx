@@ -35,26 +35,6 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   const [editable, setEditable] = useState<boolean>(isEditMode) // In the original request there is no need to change edit mode, but it can be added later
   const [fileStatus, setFileStatus] = useState<FileStatusType>('Open')
   const updateFile = useFileStore((state) => state.updateFile)
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => <CustomAppBar file={file} onToggleStatus={function (): void {
-        switch (files.find((file) => file.id === fileId)?.status) {
-          case 'Open':
-            if (file) {
-              updateFile(file.id, { status: 'Closed' })
-              setFileStatus('Closed')
-            }
-            break
-          case 'Closed':
-            if (file) {
-              updateFile(file.id, { status: 'Open' })
-              setFileStatus('Open')
-            }
-            break
-        }
-      } } />,
-    });
-  }, [navigation, fileStatus, fileId, file]);
   
   useEffect(() => {
     if (fileId) {
@@ -91,10 +71,10 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
       // Update the file's date to the current date
 
       file.dateInput = new Date()
+      file.status = fileStatus
       addFile(file)
       alert('File saved successfully!')
       firebaseAnalytics.logEvent(EVENT_NAMES.FILE_CREATION_SUCCESS, { fileId: file.id })
-
       navigation.goBack()
     } else {
       alert(`Please fill in the following fields: ${missingFields.join(', ')}`)
@@ -118,21 +98,38 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
   }
 
   return (
-        <Tab.Navigator initialRouteName={getInitialRouteName()}>
-        <Tab.Screen
-          name={t('informationTab')}
-          children={() => (
-          <TabA 
-            file={file} 
-            setFile={setFile} 
-            editable={editable} 
+    
+    <View style={{ flex: 1 }}>
+    <CustomAppBar
+      mandatoryInput={file.mandatoryInput}
+      status={file.status}
+      dateInput={file.dateInput}
+      onToggleStatus={function (): void {
+        const currentFile = files.find((file) => file.id === fileId)
+        setFileStatus(fileStatus === 'Open' ? 'Closed' : 'Open')
+        if (currentFile) {
+          const newStatus = currentFile.status === 'Open' ? 'Closed' : 'Open'
+          updateFile(currentFile.id, { status: newStatus })
+          setFile({ ...currentFile, status: newStatus })
+        }
+      }}
+    />
+    <Tab.Navigator initialRouteName={getInitialRouteName()}>
+      <Tab.Screen
+        name={t('informationTab')}
+        children={() => (
+          <TabA
+            file={file}
+            setFile={setFile}
+            editable={editable}
             handleSave={handleSave}
           />
-          )}
-          options={{ lazy: false }}
-        />
-        <Tab.Screen name={t('tabBScreenName')} component={TabB}/>
-        <Tab.Screen name={t('tabCScreenName')} component={TabC}/>
-        </Tab.Navigator>
+        )}
+        options={{ lazy: false }}
+      />
+      <Tab.Screen name={t('tabBScreenName')} component={TabB} />
+      <Tab.Screen name={t('tabCScreenName')} component={TabC} />
+    </Tab.Navigator>
+  </View>
   )
 }

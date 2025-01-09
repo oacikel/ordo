@@ -9,17 +9,30 @@ import globalStyles from 'src/styles'
 
 
 interface CustomAppBarProps {
-    file: IFile | null
+    mandatoryInput?: string
+    status?: FileStatusType
+    dateInput?: Date
     onToggleStatus: () => void
   }
 
-  const CustomAppBar: React.FC<CustomAppBarProps> = ({ file, onToggleStatus }) => {
-  const {mandatoryInput: fileName, status:fileStatus, 'dateInput':fileDate} = file || {mandatoryInput: '', status: 'Open', dateInput: null}
+  const CustomAppBar: React.FC<CustomAppBarProps> = ({ mandatoryInput, status, dateInput, onToggleStatus }) => {
   const [menuVisible, setMenuVisible] = useState(false)
+  const [fileStatus, setStatus] = useState<FileStatusType | undefined>(status)
   const navigation = useNavigation()
   const openMenu = () => setMenuVisible(true)
   const closeMenu = () => setMenuVisible(false)
   const {t} = useTranslation()
+
+  const handleToggleStatus = () => {
+    console.log('handleToggleStatus')
+    if (fileStatus === 'Open') {
+      setStatus('Closed')
+    } else {
+      setStatus('Open')
+    } 
+    onToggleStatus()
+    closeMenu()
+  }
 
   return (
     <View style={styles.container}>
@@ -28,9 +41,9 @@ interface CustomAppBarProps {
       </TouchableOpacity>
       <View style={styles.customAppBarMiddleSection}>
       <Text style={styles.title}>{t('fileDetailsAppBarTitle')}</Text>
-      <Text style={styles.text}>{`${fileName} - ${fileDate ?? ''}`}</Text>
+      <Text style={styles.text}>{`${mandatoryInput} - ${dateInput ?? ''}`}</Text>
       </View>
-      <View style={styles.rightSection}>
+      {fileStatus && <View style={styles.rightSection}>
         <Chip style={[globalStyles.statusChip, fileStatus === 'Open' ? globalStyles.openStatus : globalStyles.closedStatus]}>
           <Text style={fileStatus === 'Open' ? globalStyles.openStatusText: globalStyles.closedStatusText}>{fileStatus === 'Open' ? t('fileStatusOpen') : t('fileStatusClosed')}</Text>
         </Chip>
@@ -41,17 +54,15 @@ interface CustomAppBarProps {
             <TouchableOpacity onPress={openMenu}>
               <Ionicons name="ellipsis-vertical" size={24} color="gray" />
             </TouchableOpacity>
-          }
-        >
+          }>
           <Menu.Item
             onPress={() => {
-              closeMenu()
-              onToggleStatus()
+              handleToggleStatus()
             }}
-            title={fileStatus === 'Open' ? t('closeFile') : t('openFile')}
+            title={status === 'Open' ? t('closeFile') : t('openFile')}
           />
         </Menu>
-      </View>
+      </View>}
     </View>
   )
 }
@@ -75,12 +86,13 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'left',
     height: 'auto',
+    width: '100%',
     flex: 1,
-    width: '50%',
   },
   customAppBarMiddleSection: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+    flex: 1,
   },
   rightSection: {
     flexDirection: 'row',
