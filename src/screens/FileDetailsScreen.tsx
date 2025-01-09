@@ -71,10 +71,10 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
       // Update the file's date to the current date
 
       file.dateInput = new Date()
+      file.status = fileStatus
       addFile(file)
       alert('File saved successfully!')
       firebaseAnalytics.logEvent(EVENT_NAMES.FILE_CREATION_SUCCESS, { fileId: file.id })
-
       navigation.goBack()
     } else {
       alert(`Please fill in the following fields: ${missingFields.join(', ')}`)
@@ -105,12 +105,12 @@ export default function  FileDetails({ route, navigation }: FileDetailsProps) {
       status={file.status}
       dateInput={file.dateInput}
       onToggleStatus={function (): void {
-        const currentFile = files.find((file) => file.id === fileId);
+        const currentFile = files.find((file) => file.id === fileId)
+        setFileStatus(fileStatus === 'Open' ? 'Closed' : 'Open')
         if (currentFile) {
-          const newStatus = currentFile.status === 'Open' ? 'Closed' : 'Open';
-          updateFile(currentFile.id, { status: newStatus });
-          setFileStatus(newStatus);
-          setFile({ ...currentFile, status: newStatus });
+          const newStatus = currentFile.status === 'Open' ? 'Closed' : 'Open'
+          updateFile(currentFile.id, { status: newStatus })
+          setFile({ ...currentFile, status: newStatus })
         }
       }}
     />

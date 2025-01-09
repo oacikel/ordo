@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { View, Text, TouchableOpacity, FlatList } from 'react-native'
 import { TextInput } from 'react-native-paper'
@@ -13,6 +13,12 @@ interface FileFieldsProps {
 
 const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
   const { t } = useTranslation()
+  const [fileType, setFileType] = React.useState<string>(file.type)
+
+  useEffect(() => {
+    file.type === 'X' ? setFileType('Y') : setFileType('X')
+  }, [file.type])
+
   return (
     <View>
       <TextInput
@@ -72,14 +78,14 @@ const FileFields: React.FC<FileFieldsProps> = ({ file, setFile, editable }) => {
       <Text style={globalStyles.subTitle}>{t('fileType')}</Text>
       <View style={globalStyles.filterContainer}>
       <TouchableOpacity
-        style={file.type === 'X' ? globalStyles.fileTypeButtonActive : globalStyles.fileTypeButton}
+        style={fileType === 'X' ? globalStyles.fileTypeButtonActive : globalStyles.fileTypeButton}
         onPress={() => setFile({ ...file, type: 'X' })}
         disabled={!editable}
       >
         <Text style={{ color: '#fff' }}>X</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={file.type === 'Y' ? globalStyles.fileTypeButtonActive : globalStyles.fileTypeButton}
+        style={fileType === 'Y' ? globalStyles.fileTypeButtonActive : globalStyles.fileTypeButton}
         onPress={() => setFile({ ...file, type: 'Y' })}
         disabled={!editable}
       >
