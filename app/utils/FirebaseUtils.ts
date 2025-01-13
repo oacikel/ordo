@@ -1,4 +1,4 @@
-////import analytics from '@react-native-firebase/analytics'
+import analytics from '@react-native-firebase/analytics'
 import { useCallback } from 'react'
 
 export const EVENT_NAMES = {
@@ -15,7 +15,7 @@ export const EVENT_NAMES = {
 const useFirebaseAnalytics = () => {
     const logEvent = useCallback(async (eventName: string, params?: { [key: string]: any }) => {
         if (Object.values(EVENT_NAMES).includes(eventName)) {
-            // await analytics().logEvent(eventName, params);
+            await analytics().logEvent(eventName, params);
         } else {
             console.warn(`Event name ${eventName} is not defined in EVENT_NAMES`);
         }
